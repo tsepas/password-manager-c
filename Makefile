@@ -1,2 +1,2 @@
-all: 
-   gcc ./src/main.c -o password-manager
+all:
+	gcc ./src/main.c -o password-manager

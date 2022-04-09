@@ -4,6 +4,16 @@
 */
 #include "../h/pass.h"
 
+struct entry{
+    char title[MAX_TITLE];
+    char password[MAX_PASSWORD];
+    char username[MAX_USERNAME];
+    char cat[20];
+    char crypted[MAX_PASSWORD];
+};
+
+typedef struct entry entry;
+
 /*
 TODO:
 1.ORA STIS EGGRAFES
@@ -11,8 +21,9 @@ TODO:
 3.apokritpografisi
 4...
 */
-int main(int argc, char const *argv[]){
-    int choice; 
+
+int main(void){
+    short int choice;
     /*Check the choice*/
     
     do{
@@ -23,7 +34,7 @@ int main(int argc, char const *argv[]){
         printf("4.Display sites\n");
         printf("5.Display categories\n");
         printf("6.About manager\n");
-        scanf("%d",&choice); 
+        scanf("%hd",&choice); 
 
         if(choice < 1 || choice > 7 ){
             printf("\n\n");
@@ -51,19 +62,19 @@ int main(int argc, char const *argv[]){
 }
 
 int add_pass(){
-    char  website[100],password[100],username[100],cat[20],crypted[100];
+    entry rec ;
 
     printf("Enter the reference:\n");
-    scanf("%s",&website);
+    scanf("%s",&rec.title);
 
     printf("Enter your username:\n");
-    scanf("%s",&username);
+    scanf("%s",&rec.username);
 
     printf("Enter the password:\n");    
-    scanf("%s",&password);
+    scanf("%s",&rec.password);
 
     printf("Enter category:\n");
-    scanf("%s",&cat);
+    scanf("%s",&rec.cat);
 
     FILE *fp;
     fp = fopen("./src/vault.txt","a"); //open file
@@ -81,12 +92,12 @@ int add_pass(){
         t = time(NULL);
         ptr = gmtime(&t);
         /*-----Crypt password-------*/
-        for (int i = 0; i < strlen(password); i++){
-            crypted[i] = password[i] ^ 'P'; // p = XOR Key
-        }               
+        for (int i = 0; i < strlen(rec.password); i++){
+            rec.crypted[i] = rec.password[i] ^ 'P'; // p = XOR Key
+        }
         /*------Write to file--------*/
         printf("Your password has been encrypted and saved into ./src/vault.txt\n");
-        fprintf(fp,"--------\nReference:%s\nUsername:%s\nPassword:%s\nCategory:%s\nDate:%s",website,username,crypted,cat, asctime(ptr));
+        fprintf(fp,"--------\nReference:%s\nUsername:%s\nPassword:%s\nCategory:%s\nDate:%s",rec.title,rec.username,rec.crypted,rec.cat, asctime(ptr));
         fclose(fp);
         exit(0);
     }
@@ -98,16 +109,15 @@ int open_pass(){
     fp = fopen("./src/vault.txt","r"); //READ FILE (R)
     /*If file not found*/
     if(fp == NULL){
-        printf("Oops!Something went wrong!\n");
+        printf("Oops!File doesn't exist!\n");
         return -7;
     }
     /*File found!*/
     else{
-        char ref[100];
+        char ref[MAX_TITLE];
         printf("Enter the reference:\n");
         scanf("%s",&ref);
         /*--Search the reference--*/
-        
 
         fclose(fp); 
     }
