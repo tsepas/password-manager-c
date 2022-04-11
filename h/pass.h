@@ -9,4 +9,3 @@ int add_pass();
 int open_pass();
 int delete_pass();
 int display_pass();
-extern char * crypt(char input[]);
