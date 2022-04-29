@@ -1,0 +1,3 @@
+#define MAX_TITLE 80
+#define MAX_USERNAME 20
+#define MAX_PASSWORD 100
